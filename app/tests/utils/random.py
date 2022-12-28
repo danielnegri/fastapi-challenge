@@ -1,5 +1,10 @@
 import random
 import string
+from decimal import Decimal
+
+
+def random_decimal(low: int = 0, high: int = 10) -> Decimal:
+    return Decimal(round(random.randint(low, high), 5))
 
 
 def random_lower_string(size: int = 8) -> str:
