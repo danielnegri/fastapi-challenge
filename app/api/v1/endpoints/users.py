@@ -69,7 +69,7 @@ def update_user(
     db: Session = Depends(deps.get_db),
     user_id: str,
     user_in: schemas.UserUpdate,
-    current_user: models.User = Depends(deps.get_current_active_superuser),
+    _: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
     Update a user.
@@ -78,7 +78,7 @@ def update_user(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="The user with this username does not exist in the system",
+            detail="User not found",
         )
     user = storage.users.update(db, db_obj=user, obj_in=user_in)
     return user

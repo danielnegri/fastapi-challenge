@@ -1,7 +1,6 @@
 import secrets
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Union
 
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from app.models import Loan
@@ -10,12 +9,16 @@ from app.storage.base import Base
 
 
 class LoansStorage(Base[Loan, LoanCreate, LoanUpdate]):
-    def create(
-        self, db: Session, *, obj_in: LoanCreate, user_id: str
-    ) -> Optional[Loan]:
-        obj_in_data = jsonable_encoder(obj_in)
+    def create(self, db: Session, *, obj_in: LoanCreate, user_id: str) -> Loan:
         db_obj = self.model(
-            **obj_in_data, id=f"u_{secrets.token_hex(6)}", user_id=user_id
+            id=f"u_{secrets.token_hex(6)}",
+            user_id=user_id,
+            title=obj_in.title,
+            amount_cents=obj_in.amount_cents,
+            annual_interest_rate=obj_in.annual_interest_rate,
+            currency=obj_in.currency,
+            term_months=obj_in.term_months,
+            due_monthly_starting=obj_in.due_monthly_starting,
         )
         db.add(db_obj)
         db.commit()
