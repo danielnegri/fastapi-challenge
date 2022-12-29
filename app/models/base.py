@@ -1,5 +1,5 @@
 import datetime
-from typing import Any
+from typing import AnyStr
 
 from sqlalchemy import Column, DateTime
 from sqlalchemy.ext.declarative import as_declarative
@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import as_declarative
 
 @as_declarative()
 class Base:
-    id: Any
+    id: AnyStr
 
     created_at = Column(
         DateTime(timezone=True), nullable=False, default=datetime.datetime.utcnow

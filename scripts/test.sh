@@ -3,4 +3,5 @@
 set -e
 set -x
 
-ENVIRONMENT=test pytest --cov=app --cov-report=term-missing app/tests "${@}"
+bash scripts/migrate.sh
+pytest --cov=app --cov-report=term-missing app/tests "${@}"

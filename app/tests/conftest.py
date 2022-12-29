@@ -11,6 +11,7 @@ from app.tests.utils.auth import (
     authentication_token_from_email,
     get_superuser_token_headers,
 )
+from app.tests.utils.users import create_random_user, create_superuser
 
 
 @pytest.fixture(scope="session")
@@ -22,6 +23,16 @@ def db() -> Generator:
 def client() -> Generator:
     with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture(scope="function")
+def random_user(db: Session):
+    return create_random_user(db)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def superuser(db: Session):
+    return create_superuser(db)
 
 
 @pytest.fixture(scope="module")

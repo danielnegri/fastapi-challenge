@@ -27,8 +27,8 @@ def upgrade() -> None:
         sa.Column("hashed_password", sa.String(), nullable=False),
         sa.Column("is_active", sa.Boolean(), default=True, nullable=False),
         sa.Column("is_superuser", sa.Boolean(), default=False, nullable=False),
-        sa.Column("created_at", sa.DateTime, default=datetime.datetime.utcnow(), nullable=False),
-        sa.Column("updated_at", sa.DateTime, default=datetime.datetime.utcnow(), nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), default=datetime.datetime.utcnow(), nullable=False),
+        sa.Column("updated_at", sa.DateTime(timezone=True), default=datetime.datetime.utcnow(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("users_email_idx"), "users", ["email"], unique=True)
