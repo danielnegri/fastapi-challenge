@@ -19,9 +19,7 @@ def list(
     """
     Retrieve loans.
     """
-    loans = service.loans.get_multi_by_user(
-        db, user_id=current_user.id, page=page, limit=limit
-    )
+    loans = service.loans.list(db, user_id=current_user.id, page=page, limit=limit)
     return loans
 
 
