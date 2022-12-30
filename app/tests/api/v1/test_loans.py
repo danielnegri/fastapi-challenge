@@ -16,10 +16,10 @@ def test_create_loan(
     data = {
         "user_id": user.id,
         "title": random_lower_string(),
-        "amount_cents": 10_000_00,
+        "amount_cents": 300_00,
         "annual_interest_rate": 0,
         "currency": "CAD",
-        "term_months": 12,
+        "term_months": 3,
         "due_monthly_starting": datetime.date.today().isoformat(),
     }
 

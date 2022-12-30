@@ -11,6 +11,7 @@ def test_amortization_schedule() -> None:
     annual_interest_rage: decimal = 0.1
 
     expected = (
+        # period, amount, interest, principal, balance
         (1, 4840.08, 1250.00, 3590.08, 146409.92),
         (2, 4840.08, 1220.08, 3620.00, 142789.92),
         (3, 4840.08, 1189.92, 3650.16, 139139.76),
@@ -52,5 +53,25 @@ def test_amortization_schedule() -> None:
     result = amortization_schedule(
         principal=principal, annual_interest_rate=annual_interest_rage, period=period
     )
+    for e, r in zip(expected, result):
+        assert pytest.approx(e) == r
+
+
+def test_amortization_schedule_zero_interest() -> None:
+    principal: int = 3_000_00
+    period: int = 3
+    annual_interest_rage: decimal = 0.0
+
+    expected = (
+        # period, amount, interest, principal, balance
+        (1, 1_000_00, 0, 1_000_00, 2_000_00),
+        (2, 1_000_00, 0, 1_000_00, 1_000_00),
+        (3, 1_000_00, 0, 1_000_00, 0),
+    )
+
+    result = amortization_schedule(
+        principal=principal, annual_interest_rate=annual_interest_rage, period=period
+    )
+
     for e, r in zip(expected, result):
         assert pytest.approx(e) == r

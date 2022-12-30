@@ -16,9 +16,6 @@ def calculate_amortization_amount(
     """
     adjusted_interest = interest_rate / 12
     x = (1 + adjusted_interest) ** period
-    if x == 1:
-        return 0
-
     return round(principal * (adjusted_interest * x) / (x - 1), 2)
 
 
@@ -34,9 +31,12 @@ def amortization_schedule(
     :param period: Total number of periods
     :return: Rows containing period, amount, interest, principal, balance, etc
     """
-    amortization_amount = calculate_amortization_amount(
-        principal, annual_interest_rate, period
-    )
+    amortization_amount = principal / period
+    if annual_interest_rate != 0:
+        amortization_amount = calculate_amortization_amount(
+            principal, annual_interest_rate, period
+        )
+
     adjusted_interest = annual_interest_rate / 12
     balance = principal
     for number in range(1, period + 1):
