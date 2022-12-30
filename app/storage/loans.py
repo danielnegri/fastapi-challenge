@@ -9,10 +9,10 @@ from app.storage.base import Base
 
 
 class LoansStorage(Base[Loan, LoanCreate, LoanUpdate]):
-    def create(self, db: Session, *, obj_in: LoanCreate, user_id: str) -> Loan:
+    def create(self, db: Session, *, obj_in: LoanCreate) -> Loan:
         db_obj = self.model(
-            id=f"u_{secrets.token_hex(6)}",
-            user_id=user_id,
+            id=f"l_{secrets.token_hex(6)}",
+            user_id=obj_in.user_id,
             title=obj_in.title,
             amount_cents=obj_in.amount_cents,
             annual_interest_rate=obj_in.annual_interest_rate,

@@ -23,6 +23,7 @@ Quick Start
 * Python >= 3.8.1
 * [Poetry](https://python-poetry.org/docs/)
 * Database migrations
+* Docker
 
 ```bash
 # Clone repository
@@ -63,6 +64,11 @@ $ docker build --rm --progress=plain -t greyco-challenge .
 $ docker run -it --rm -p 8000:80 greyco-challenge
 $ open http://localhost:8000/docs
 ```
+
+## How-To
+
+For a more complete example including how to create users, loans and schedules, see the 
+[Tutorial - User Guide](docs/tutorial.md). 
 
 ## Contributing
 

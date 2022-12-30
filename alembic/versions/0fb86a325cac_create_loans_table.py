@@ -10,6 +10,8 @@ import datetime
 import sqlalchemy as sa
 from alembic import op
 
+from app.models import ScheduleStatus
+
 # revision identifiers, used by Alembic.
 revision = '0fb86a325cac'
 down_revision = '37a458cb0668'
@@ -42,19 +44,26 @@ def upgrade() -> None:
         "schedules",
         sa.Column("id", sa.String(), nullable=False),
         sa.Column("loan_id", sa.String(), nullable=False),
-        sa.Column("month", sa.Integer(), default=0, nullable=False),
+        sa.Column("month", sa.Integer(), default=1, nullable=False),
+        sa.Column("due", sa.Date(), nullable=False),
         sa.Column("amount_cents", sa.BigInteger(), default=0, nullable=False),
-        sa.Column("interest", sa.DECIMAL(15, 5), default=0, nullable=False),
-        sa.Column("balance_cents", sa.DECIMAL(15, 5), default=0, nullable=False),
+        sa.Column("interest_cents", sa.BigInteger, default=0, nullable=False),
+        sa.Column("principal_cents", sa.BigInteger, default=0, nullable=False),
+        sa.Column("balance_cents", sa.BigInteger(), default=0, nullable=False),
+        sa.Column("status", sa.Enum(ScheduleStatus), default=ScheduleStatus.SCHEDULED, nullable=False),
         sa.Column("created_at", sa.DateTime(timezone=True), default=datetime.datetime.utcnow(), nullable=False),
         sa.Column("updated_at", sa.DateTime(timezone=True), default=datetime.datetime.utcnow(), nullable=False),
         sa.ForeignKeyConstraint(["loan_id"], ["loans.id"]),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("schedules_loan_id_idx"), "schedules", ["loan_id"], unique=False)
+    op.create_index(op.f("schedules_loan_due_idx"), "schedules", ["due"], unique=False)
+    op.create_index(op.f("schedules_loan_status_idx"), "schedules", ["status"], unique=False)
 
 
 def downgrade() -> None:
+    op.drop_index(op.f("schedules_loan_status_idx"), table_name="schedules")
+    op.drop_index(op.f("schedules_loan_due_idx"), table_name="schedules")
     op.drop_index(op.f("schedules_loan_id_idx"), table_name="schedules")
     op.drop_table("schedules")
 
