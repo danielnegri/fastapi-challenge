@@ -16,7 +16,7 @@ class ScheduleBase(BaseModel):
     interest_cents: Optional[NonNegativeInt] = None
     principal_cents: Optional[NonNegativeInt] = None
     balance_cents: Optional[NonNegativeInt] = None
-    status: Optional[str] = ScheduleStatus.SCHEDULED
+    status: Optional[ScheduleStatus] = ScheduleStatus.SCHEDULED
 
 
 class ScheduleCreate(ScheduleBase):
@@ -30,7 +30,7 @@ class ScheduleCreate(ScheduleBase):
 
 
 class ScheduleUpdate(BaseModel):
-    status: Optional[str]
+    status: ScheduleStatus
 
 
 class ScheduleInDBBase(ScheduleBase):

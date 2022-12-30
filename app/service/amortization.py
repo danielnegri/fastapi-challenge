@@ -16,6 +16,9 @@ def calculate_amortization_amount(
     """
     adjusted_interest = interest_rate / 12
     x = (1 + adjusted_interest) ** period
+    if x == 1:
+        return 0
+
     return round(principal * (adjusted_interest * x) / (x - 1), 2)
 
 

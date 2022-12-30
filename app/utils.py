@@ -1,7 +1,10 @@
+import calendar
 from datetime import datetime
 
+from dateutil import relativedelta
 
-def nth_day_of_next_month(dt: datetime, day: int = 1) -> datetime:
+
+def nth_day_of_next_month(dt: datetime, day: int) -> datetime:
     """Get the first day of the next month. Preserves the timezone.
 
     Args:
@@ -11,7 +14,8 @@ def nth_day_of_next_month(dt: datetime, day: int = 1) -> datetime:
     Returns:
         datetime.datetime: The n-th day of the next month at 00:00:00.
     """
-    if dt.month == 12:
-        return datetime(year=dt.year + 1, month=1, day=day, tzinfo=dt.tzinfo)
-    else:
-        return datetime(year=dt.year, month=dt.month + 1, day=day, tzinfo=dt.tzinfo)
+    next_month = dt + relativedelta.relativedelta(months=1)
+    next_day = min(
+        calendar.monthrange(year=next_month.year, month=next_month.month)[1], day
+    )
+    return next_month.replace(day=next_day)

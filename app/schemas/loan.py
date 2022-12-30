@@ -19,7 +19,6 @@ class LoanBase(BaseModel):
 
 
 class LoanCreate(LoanBase):
-    user_id: user_id_type
     title: str
     amount_cents: NonNegativeInt
     annual_interest_rate: decimal_type
