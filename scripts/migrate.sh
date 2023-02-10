@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-rm greyco-*.sqlite3
+rm challenge-*.sqlite3
 alembic upgrade heads

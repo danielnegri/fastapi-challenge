@@ -5,8 +5,8 @@
 To run any of the examples, copy the commands to a terminal, and start uvicorn with:
 
 ```bash
-$ docker build --rm -t greyco-challenge .
-$ docker run -it --rm -p 8000:80 greyco-challenge
+$ docker build --rm -t fastapi-challenge .
+$ docker run -it --rm -p 8000:80 fastapi-challenge
 ```
 
 ## Login with an Admin (superuser)
@@ -14,19 +14,19 @@ $ docker run -it --rm -p 8000:80 greyco-challenge
 ```bash
 $ curl --location --request POST 'localhost:8000/api/v1/auth/token' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
-    --data-urlencode 'username=admin@greystone.com' \
+    --data-urlencode 'username=admin@example.com' \
     --data-urlencode 'password=admin'
 
-# Response: 201 Created   
+# Response: 201 Created
 {
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzM3MjgwNjksInN1YiI6InVfNzg0Y2FhYWNiODRjIn0.S8IQZI_x_LQTQyc0rZpaA9lRDVbidAlV0CWAd3fzYdk",
     "token_type": "bearer"
-}    
+}
 ```
 
 ## Create a user
 
-Only admin users have access to creating users. Make sure to login as an admin 
+Only admin users have access to creating users. Make sure to login as an admin
 and use the access token to create a new user.
 
 ```bash
@@ -37,7 +37,7 @@ $ curl --location --request POST 'localhost:8000/api/v1/users' \
         "email": "john.stewart@example.com",
         "password": "zP6ajmjv"
     }'
-    
+
 # Response: 201 Created
 {
     "email": "john.stewart@example.com",
@@ -63,7 +63,7 @@ $ curl --location --request GET 'localhost:8000/api/v1/users' \
 # Response: 200 OK
 [
     {
-        "email": "admin@greystone.com",
+        "email": "admin@example.com",
         "is_active": true,
         "is_superuser": true,
         "full_name": "Administrator",
@@ -114,11 +114,11 @@ $ curl --location --request POST 'localhost:8000/api/v1/auth/token' \
     --data-urlencode 'username="john.stewart@example.com"' \
     --data-urlencode 'password=zP6ajmjv'
 
-# Response: 201 Created   
+# Response: 201 Created
 {
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzM3MjkwNjUsInN1YiI6InVfYmI4YTIzNmNhMDVjIn0.8ngFy7VL9Oj1Lw5MgruSqUdMu5pd38yo-peo8EMUqDs",
     "token_type": "bearer"
-}    
+}
 ```
 
 ## Create a loan
